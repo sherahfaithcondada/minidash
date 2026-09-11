@@ -2,7 +2,6 @@
 <html>
 <head>
     <title>MINIGAME</title>
-    <link rel="stylesheet" href= "minidash.css"> 
 </head>
 <body>
     <div id="header">
@@ -28,7 +27,233 @@
 
     <p>Use ← and → to move</p>
 
-    <script src="minidash.js"></script>
 </body>
 
 </html>
+<style>body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background: black;
+    color: white; 
+
+}
+
+#header {
+    width: 400px;
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#header h1 {
+    margin: 0;
+}
+
+#scoreText {
+    font-size: 20px;
+}
+
+#game {
+    width: 400px;
+    height: 600px;
+    background-color: black;
+    margin: auto;
+    position:relative;
+    overflow: hidden;
+}
+
+.lane {
+    position: absolute;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: repeating-linear-gradient(
+        to bottom,
+        white 0px,
+        white 30px,
+        transparent 30px,
+        transparent 60px
+    );
+
+}
+
+.lane1 {
+    left: 33.33%;
+}
+
+.lane2 {
+    left: 66.66%;
+}
+
+#player {
+    width: 80px;
+    height: 60px;
+    background-color: red;
+    position:absolute;
+    bottom: 20px;
+    left: 160px;
+    border-radius: 10px;
+}
+
+#enemy {
+    width: 80px;
+    height: 60px;
+    background-color:blue;
+    position:absolute;
+    top: -60px;
+    left: 160px;
+    border-radius: 10px;
+}
+
+#gameOver {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background-color: black;
+
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#gameOver h2 {
+    font-size: 40px;
+}
+
+button {
+    padding: 10px 25px;
+    font-size: 18px;
+    color: black;
+    cursor: pointer;
+    background-color: rgb(238, 70, 9);
+    border-radius: 10px;
+}
+</style>
+<script>let currentLane = 1;
+let enemyPosition = -80;
+let score = 0;
+let gameRunning = true;
+let enemySpeed = 3;
+
+const player = document.getElementById("player");
+const enemy = document.getElementById("enemy");
+const scoreDisplay = document.getElementById("SCORE");
+const gameOverScreen = document.getElementById("gameOver");
+
+document.addEventListener("keydown", function(event) {
+
+    if (!gameRunning) return;
+
+    if (event.key === "ArrowLeft" && currentLane > 0) {
+        currentLane--;
+    }
+
+    if (event.key === "ArrowRight" && currentLane < 2) {
+        currentLane++;
+    }
+
+    movePlayer();
+});
+
+function movePlayer() {
+
+    if (currentLane === 0) {
+        player.style.left = "27px";
+    }
+
+    if (currentLane === 1) {
+        player.style.left = "160px";
+    }
+
+    if (currentLane === 2) {
+        player.style.left = "293px";
+    }
+}
+
+function moveEnemy() {
+ 
+    if (!gameRunning) return;
+
+    enemyPosition += enemySpeed;
+
+    enemy.style.top = enemyPosition + "px";
+
+    checkCollision();
+
+    /* Enemy reached bottom */
+
+    if (enemyPosition > 600) {
+
+        enemyPosition = -80;
+
+        score++;
+
+        enemySpeed = 3 + score * 0.2;
+
+        scoreDisplay.textContent = score;
+
+        chooseRandomLane();
+    }
+}
+
+function chooseRandomLane() {
+
+    let enemyLane = Math.floor(Math.random() * 3);
+
+    if (enemyLane === 0) {
+        enemy.style.left = "27px";
+    }
+
+    if (enemyLane === 1) {
+        enemy.style.left = "160px";
+    }
+
+    if (enemyLane === 2) {
+        enemy.style.left = "293px";
+    }
+}
+
+function checkCollision() {
+
+    const playerRect = player.getBoundingClientRect();
+    const enemyRect = enemy.getBoundingClientRect();
+
+    if (
+        playerRect.left < enemyRect.right &&
+        playerRect.right > enemyRect.left &&
+        playerRect.top < enemyRect.bottom &&
+        playerRect.bottom > enemyRect.top
+    ) {
+
+        gameOver();
+    }
+}
+
+function gameOver() {
+
+    gameRunning = false;
+    document.getElementById("finalScore").textContent = score;
+    gameOverScreen.style.display = "flex";
+}
+
+function restartGame() {
+
+    currentLane = 1;
+    enemyPosition = -60;
+    score = 0;
+    enemySpeed = 3;
+    gameRunning = true;
+
+    scoreDisplay.textContent = score;
+
+    player.style.left = "160px";
+    enemy.style.left = "160px";
+    enemy.style.top = "-60px";
+
+    gameOverScreen.style.display = "none";
+}
+
+setInterval(moveEnemy, 20);
+
+</script>
