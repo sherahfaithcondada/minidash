@@ -1,0 +1,99 @@
+body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background: black;
+    color: white; 
+
+}
+
+#header {
+    width: 400px;
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#header h1 {
+    margin: 0;
+}
+
+#scoreText {
+    font-size: 20px;
+}
+
+#game {
+    width: 400px;
+    height: 600px;
+    background-color: black;
+    margin: auto;
+    position:relative;
+    overflow: hidden;
+}
+
+.lane {
+    position: absolute;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: repeating-linear-gradient(
+        to bottom,
+        white 0px,
+        white 30px,
+        transparent 30px,
+        transparent 60px
+    );
+
+}
+
+.lane1 {
+    left: 33.33%;
+}
+
+.lane2 {
+    left: 66.66%;
+}
+
+#player {
+    width: 80px;
+    height: 60px;
+    background-color: red;
+    position:absolute;
+    bottom: 20px;
+    left: 160px;
+    border-radius: 10px;
+}
+
+#enemy {
+    width: 80px;
+    height: 60px;
+    background-color:blue;
+    position:absolute;
+    top: -60px;
+    left: 160px;
+    border-radius: 10px;
+}
+
+#gameOver {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background-color: black;
+
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#gameOver h2 {
+    font-size: 40px;
+}
+
+button {
+    padding: 10px 25px;
+    font-size: 18px;
+    color: black;
+    cursor: pointer;
+    background-color: rgb(238, 70, 9);
+    border-radius: 10px;
+}

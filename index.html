@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MINIGAME</title>
+    <link rel="stylesheet" href= "minidash.css"> 
+</head>
+<body>
+    <div id="header">
+        <h1>MINIDASH</h1>
+        <div id="scoreText">Score: <span id="SCORE">0</span></div>
+    </div>
+
+    <div id="game">
+            
+        <div class="lane lane1"></div>
+        <div class="lane lane2"></div>
+
+        <div id="player"></div>  
+        <div id="enemy"></div>  
+
+        <div id="gameOver">
+            <h2>CRASHED!</h2>
+            <p>Score: <span id="finalScore">0</span></p>
+            <button onclick="restartGame()">try again!</button>
+        </div>
+    
+    </div>
+
+    <p>Use ← and → to move</p>
+
+    <script src="minidash.js"></script>
+</body>
+
+</html>
